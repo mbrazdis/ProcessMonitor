@@ -16,7 +16,7 @@ namespace monitor
         private static CancellationTokenSource? cts;
         private static CancellationToken token;
 
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             if (args.Length != 3)
             {
@@ -70,7 +70,17 @@ namespace monitor
             Console.WriteLine("NEW PROCESS CHECK");
             Console.WriteLine("===================================================================");
 
-            var processes = Process.GetProcessesByName(processName);
+            Process[] processes = Array.Empty<Process>();
+            try
+            {
+                processes = Process.GetProcessesByName(processName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving processes: {ex.Message}");
+                return;
+            }
+
             string logs = string.Empty;
 
             if (processes.Length == 0)
@@ -139,7 +149,16 @@ namespace monitor
             Console.WriteLine($"   Status                 : Killing");
             Console.WriteLine($"   Runtime                : {runtime.TotalMinutes:F2} minutes");
 
-            process.Kill();
+            try
+            {
+                process.Kill();
+                Console.WriteLine($"Process {process.ProcessName} (PID: {process.Id}) was killed.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error killing process: {ex.Message}");
+                return string.Empty;
+            }
 
             string log = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}\n" +
                          $"{process.ProcessName} (PID: {process.Id}) was killed\n" +
