@@ -40,9 +40,14 @@ Terminated processes are logged in a file named `logs.txt` in the application's 
 
 ### NUnit Tests
 
-- **CheckProcessTest**: Verifies that the utility correctly identifies and terminates processes exceeding the allowed lifetime.
-- **LogToFileTest**: Checks if logs are correctly written to the log file.
-- **KillProcessTest**: Ensures that processes are terminated and logs are correctly generated.
+- **CheckProcess_ShouldStartNotepad**: Tests if Notepad starts correctly.
+-**CheckProcess_ShouldKillNotepadAfterLifetime**: Tests if Notepad is killed after exceeding the specified lifetime.
+-**LogToFile_ShouldCreateLogFile**: Tests if the log file is created correctly.
+-**LogToFile_ShouldContainLoggedContent**: Tests if the log file contains the expected content.
+-**KillProcess_ShouldTerminateNotepad**: Tests if Notepad is terminated correctly.
+-**KillProcess_ShouldContainProcessNameInLog**: Tests if the log contains the process name.
+-**KillProcess_ShouldContainKillConfirmationInLog**: Tests if the log contains kill confirmation.
+-**KillProcess_ShouldEnsureProcessHasExited**: Tests if the process has exited after termination.
 
 ## Source Code
 
